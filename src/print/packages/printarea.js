@@ -227,7 +227,7 @@ export default class {
         typeInput = item.tagName === 'SELECT' ? 'select' : item.tagName === 'TEXTAREA' ? 'textarea' : '';
       }
       // 处理input框
-      if (item.tagName === 'INPUT') {
+      if (item.tagName === 'INPUT' && item.type !== 'file') {
         // 除了单选框 多选框比较特别
         if (typeInput === 'radio' || typeInput === 'checkbox') {
           if (item.checked) {
@@ -252,9 +252,11 @@ export default class {
           }
         }
         // 处理textarea
-      } else {
+      } else if (item.tagName === 'TEXTAREA') {
         copiedInput.innerHTML = item.value;
         copiedInput.setAttribute('html', item.value);
+      } else {
+        continue;
       }
     }
 
