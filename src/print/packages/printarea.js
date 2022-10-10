@@ -227,7 +227,7 @@ export default class {
         typeInput = item.tagName === 'SELECT' ? 'select' : item.tagName === 'TEXTAREA' ? 'textarea' : '';
       }
       // 处理input框
-      if (item.tagName === 'INPUT' && item.type !== 'file') {
+      if (item.tagName === 'INPUT') {
         // 除了单选框 多选框比较特别
         if (typeInput === 'radio' || typeInput === 'checkbox') {
           if (item.checked) {
@@ -235,8 +235,10 @@ export default class {
           }
 
         } else {
-          copiedInput.value = item.value;
-          copiedInput.setAttribute('value', item.value);
+          try {
+            copiedInput.value = item.value;
+            copiedInput.setAttribute('value', item.value);
+          } catch (e) {}
         }
         // 处理select
       } else if (typeInput === 'select') {
@@ -252,11 +254,9 @@ export default class {
           }
         }
         // 处理textarea
-      } else if (item.tagName === 'TEXTAREA') {
+      } else {
         copiedInput.innerHTML = item.value;
         copiedInput.setAttribute('html', item.value);
-      } else {
-        continue;
       }
     }
 
